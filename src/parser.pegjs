@@ -20,7 +20,7 @@ definition= symbol _  ':' _  typedef
 provision= 'PROVIDED' _ ':' _ '('? _ boolexpr _')'? _'.'
 typedef= 'MAP' __  type __  'TO' __  type _  / type _
 type= _ 'id' _  / _  'amount' _
-symbol=  _ [a-zA-Z]+ _
+symbol=  _ sym:[a-zA-Z]+ _ {return sym.join("")}
 stmt= _  '.' _
  / _  expr _ '.' _
  / _ definition _ '.' _
@@ -61,8 +61,8 @@ expr1= INTEGER / VARIABLE / type
 lval= symbol _
  / symbol __ 'OF' __ symbol
 
-INTEGER = ('-')? _ [0-9]+
-VARIABLE = [a-zAZ]+
+INTEGER = i:('-')? _ [0-9]+ {return parseInt(i,10) }
+VARIABLE =  symbol _
 
  comma = _ "," _
 // optional whitespace

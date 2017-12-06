@@ -19,7 +19,7 @@ class App extends React.Component {
     try {
       ast = parser.parse(query);
     } catch (ex) {
-      error = ex.message;
+      error = ex.message + ` line: ${ex.location.start.line} col: ${ex.location.start.column}`;
     }
     this.setState({ ast, query, error });
   }
