@@ -1,17 +1,10 @@
 ARTICLE: Token.
 COMMENT: array for the token balances.
-Balance: map id to amount.
+Balance: MAP id TO amount.
 PARAMETERS:
-Comment: initialize contract with tokens supply.
-Initial Supply: amount.
- PREAMBLE:
- Comment: give the creator all initial tokens.
- Balance of Creator be Initial Supply.
-
- CHAPTER: transfer Amount from Sender Id to Receiver Id.
- Provided: Balance of Sender greater or equal Amount.
- Provided: Balance of Receiver added to Amount
- greater Balance of Receiver.
- Subtract Amount from Balance of Sender.
- Add Amount to Balance of Receiver.
+COMMENT: initialize contract with tokens supply.
+InitialSupply: amount.
+CONSTRUCTOR: .
+ CHAPTER: transfer.
+.
 

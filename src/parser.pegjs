@@ -1,27 +1,25 @@
 contract= article_list
 article_list= article+
 article= 'ARTICLE' _ ':' _ symbol _ '.' _ stmt_list _ 'PARAMETERS' _ ':' _
- parameters _ 'CONSTRUCTOR' _ ':' _ stmt_list chapters _
- / 'ARTICLE' _ ':' _ symbol _ '.' _ stmt_list chapters
+ parameters _ 'CONSTRUCTOR' _ ':' _ stmt_list _ chapters _
+ / 'ARTICLE' _ ':' _ symbol _ '.' _ stmt_list _ chapters
  / 'ARTICLE' _ ':' _ symbol _ '.' _ chapters
 chapters= chapter+
-chapter= 'CHAPTER' _  ':' _ signature _ '.' _  stmt_list
-signature= _ symbol _
- / _  symbol _  arguments _
-arguments= argument+ _ filler _  argument+
-argument= type
- / symbol _  typedef
+chapter= _ 'CHAPTER' _  ':' _ signature _ '.' _  stmt_list _
+signature= symbol  / symbol _ arguments _
+arguments= argument _ ( _ filler _  argument _)*
+argument= type _ / symbol __  typedef _
 filler= 'TO' / 'FROM'
 parameters = commented_parameter _ '.' _ / _ parameter+ _ commented_parameter _ '.' _
 commented_parameter= parameter+ _  / _ comment _ '.' _ parameter+ _
 parameter= symbol _  ':' _ typedef
-comment= 'COMMENT' _  ':' _ [a-zAZ0-9 ]* _
-definition= symbol _  ':' _  typedef
-provision= 'PROVIDED' _ ':' _ '('? _ boolexpr _')'? _'.'
-typedef= 'MAP' __  type __  'TO' __  type _  / type _
-type= _ 'id' _  / _  'amount' _
+comment= 'COMMENT' _  ':' _ cmt:[a-zA-Z0-9 ]* _ {return cmt.join("")}
+definition= symbol _  ':' _  typedef 
+provision= 'PROVIDED' _ ':' _ boolexpr _'.' 
+typedef= 'MAP' __  type __ 'TO' __  type _  / type _
+type= 'id' / 'amount'
 symbol=  _ sym:[a-zA-Z]+ _ {return sym.join("")}
-stmt= _  '.' _
+stmt=  '.' _
  / _  expr _ '.' _
  / _ definition _ '.' _
  / _ provision _
@@ -53,13 +51,11 @@ expr=
  / 'ADD' __ expr1 __ 'TO' __ lval _
  / expr1 _ '*' _ expr1 _
  / expr1 _ '/' _ expr1 _
- / '(' _ expr1 _ ')'_
- / lval
+ / '(' _ expr1 _ ')'_ 
 
-expr1= INTEGER / VARIABLE / type
+expr1= INTEGER _ / VARIABLE _ / type _ / lval _
 
-lval= symbol _
- / symbol __ 'OF' __ symbol
+lval= symbol __ 'OF' __ symbol _ / symbol _
 
 INTEGER = i:('-')? _ [0-9]+ {return parseInt(i,10) }
 VARIABLE =  symbol _

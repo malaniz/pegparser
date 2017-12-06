@@ -10,6 +10,7 @@ class App extends React.Component {
       query: '',
       error: '',
     };
+
   }
 
   handleChange = (e) => {
@@ -18,6 +19,7 @@ class App extends React.Component {
     let error = '';
     try {
       ast = parser.parse(query);
+      console.log(JSON.stringify(ast, null, 2));
     } catch (ex) {
       error = ex.message + ` line: ${ex.location.start.line} col: ${ex.location.start.column}`;
     }
@@ -51,7 +53,9 @@ class App extends React.Component {
         <div className="expression-editor__error">
           {error}
           <hr />
-          {JSON.stringify(ast, null, 2)}
+          <pre>
+            {JSON.stringify(ast, null, 2)}
+          </pre>
         </div>
       </div>
     );
