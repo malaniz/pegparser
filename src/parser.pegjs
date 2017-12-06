@@ -1,6 +1,6 @@
 contract= article_list
 article_list= article+
-article= 'ARTICLE' _ ':' _ symbol '.' _ stmt_list _ 'PARAMETERS' _ ':' _
+article= 'ARTICLE' _ ':' _ symbol _ '.' _ stmt_list _ 'PARAMETERS' _ ':' _
  parameters _ 'CONSTRUCTOR' _ ':' _ stmt_list chapters _
  / 'ARTICLE' _ ':' _ symbol _ '.' _ stmt_list chapters
  / 'ARTICLE' _ ':' _ symbol _ '.' _ chapters
@@ -20,7 +20,7 @@ definition= symbol _  ':' _  typedef
 provision= 'PROVIDED' _ ':' _ '('? _ boolexpr _')'? _'.'
 typedef= 'MAP' __  type __  'TO' __  type _  / type _
 type= _ 'id' _  / _  'amount' _
-symbol=  _ [a-zAZ]+ _
+symbol=  _ [a-zA-Z]+ _
 stmt= _  '.' _
  / _  expr _ '.' _
  / _ definition _ '.' _
